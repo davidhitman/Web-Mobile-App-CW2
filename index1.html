@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- header linking all css and javascript files and contains the title-->
+<head>
+    <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="index.css">
+    <title>Coursework</title>
+</head>
+
+<body>
+    <!-- div with app Id to be accessed in the javaScript-->
+    <div id="app">
+        <div v-if="showLesson" > <!-- check if the lessons page should display or the basket page should display-->
+            <div class="head"> <!--div with search input and basket, ascend and descend button-->
+                <p >
+                    <input class="search" type="text" v-model="search" placeholder="Search Lesson">
+                </p>
+                <button class="basketBtnEnable" v-if="enableCheckout" v-on:click="showCheckout" ><span class="fa fa-shopping-basket">{{totalItems}}</span>Basket</button>
+                <button  class="basketBtnDisable" v-else disabled><span class="fa fa-shopping-basket">{{totalItems}}</span>Basket</button>
+                <button class="Ascend"  v-on:click="lesson in Ascending">Ascend</button>
+                <button class="Descend" v-on:click="lesson in Descending">Descend</button>
+            </div>
+            <div class="lesson-section">
+                <div class="lesson-list">
+                    <div v-for="lesson in searchLesson" class="lesson"> <!-- div displaying all ten lessons in the loop-->
+                        <img v-bind:src="lesson.image"> <!--v-bind binds the image-->
+                        <h1 v-text="lesson.title"></h1>
+                        <p class="description" v-html="lesson.description"></p>
+                        <p class="Location">
+                            Location: {{lesson.loc}}
+                        </p>
+                        <p class="price">
+                            Price: {{lesson.price}}
+                        </p>
+                        <p class = "spaces">
+                            Space: {{lesson.spaces}}
+                        </p>
+                        <!-- check out buttons-->
+                        <button class="Addbtn" id="addButt" v-on:click= "addToCart(lesson)" v-if="canAddToCart(lesson)"> Add to cart</button>
+                        <button  id="Addbtn" v-else disabled>Add to cart</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div class="showCheckOut" v-else> <!-- check if the checkout page should display or the lesson page should be display-->
+            <!--basket butto-->
+            <button class="basketBtnEnableCheck" v-on:click="showCheckout" ><span class="fa fa-shopping-basket">{{totalItems}}</span>Basket</button>
+            <!-- table storing all the element in the basket to be displayed in the checkout button-->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Lesson</th>
+                        <th>Location</th>
+                        <th>Space</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- display the contents of the basket in the table row-->
+                    <tr v-for="item in cart">
+                        <td>{{item.lesson.title}}</td>
+                        <td>{{item.lesson.loc}}</td>
+                        <td>{{item.quantity}}</td> 
+                        <td>{{item.lesson.price}}</td>
+                        <td>
+                            <button class="remove" v-on:click="removeItem(item)">Remove</button> <!--remove button to remove the items from the list-->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- checkout section where the user enters their check out information-->
+            <h2>Checkout</h2>
+            <p>
+                <strong>Name:</strong>
+                <input v-model="order.name">
+            </p>
+            <p>
+                <strong>Phone:</strong>
+                <input v-model.number="order.phone">
+            </p>
+            <!--submite section to print out what the user has entered-->
+            <div class="submit">
+                <p>Name: {{order.name}}</p>
+                <p>Phone: {{order.phone}}</p>
+            </div>
+            <!--the submit button to submite the information entered-->
+            <button class="submitEnable" v-if="enableSubmit" v-on:click="submitForm">Submit</button>
+            <button class="submitDisenable" v-else disabled>Submit</button>
+        </div> 
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
