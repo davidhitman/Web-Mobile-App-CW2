@@ -1,4 +1,5 @@
 const {MongoClient, ObjectId} = require("mongodb");
+var cors = require("cors");
 
 const uri = 'mongodb+srv://David:David.123@webapp.kozhplr.mongodb.net/?retryWrites=true&w=majority';
 const client = new MongoClient(uri);
@@ -51,7 +52,6 @@ async function searchLesson(searchTerm) {
 
 // setting up express server
 const express = require("express");
-var cors = require("cors");
 const app = express();
 app.use(express.json());
 app.use(cors()); 
