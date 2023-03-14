@@ -51,7 +51,7 @@ async function searchLesson(searchTerm) {
 
 // setting up express server
 const express = require("express");
-var cors = require("cors");
+//var cors = require("cors");
 const app = express();
 app.use(express.json());
 app.use(cors()); 
