@@ -1,5 +1,5 @@
 const {MongoClient, ObjectId} = require("mongodb");
-var cors = require("cors");
+//var cors = require("cors");
 
 const uri = 'mongodb+srv://David:David.123@webapp.kozhplr.mongodb.net/?retryWrites=true&w=majority';
 const client = new MongoClient(uri);
@@ -54,7 +54,7 @@ async function searchLesson(searchTerm) {
 const express = require("express");
 const app = express();
 app.use(express.json());
-app.use(cors()); 
+//app.use(cors()); 
 
 // port where the app is listenning
 const port = process.env.PORT || 3000;
