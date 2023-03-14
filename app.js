@@ -13,7 +13,7 @@ let app = new Vue({ // The Vue instance
     },
     created: function(){
         fetch(
-            "https://petstoreapp2-env.eba-g43aptvw.eu-west2.elasticbeanstalk.com/collections/products"
+            "Webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com"
         )
         .then((response) => response.json())
         .then((lessons) => {
