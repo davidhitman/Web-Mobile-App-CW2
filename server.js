@@ -21,6 +21,7 @@ let db = client.db(dbName);
 
 var app = express();
 app.use(express.json());
+app.set("json spaces", 3);
 
 app.param('collectionName', function(req, res, next, collectionName) {
   req.collection = db.collection(collectionName);
@@ -36,6 +37,8 @@ app.get('/collections/:collectionName', function(req, res, next) {
   });
 });
 
+
+// listening to the port 3000 
 const port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log("App started on port: " + port);
