@@ -1,9 +1,10 @@
 let app = new Vue({ // The Vue instance
     el: '#app',
     data: {
-         lessons:lessons,
+         lessons:[],
          showLesson: true,
          show: false,
+         url: "http://webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com/",
          cart:[],
          search:'',
          order: {
@@ -13,34 +14,53 @@ let app = new Vue({ // The Vue instance
     },
 
     created: function () {
-        fetch("http://webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com/collections/products")
-          .then((response) => response.json())
-          .then((lessons) => {
-            this.lessons = lessons;
-            return;
-          });
-        // this.getLessons();
-        return;
-      },
-
-      watch: {
-        searchTerm: {
-            handler() {
-              if(this.searchTerm === "")
-                this.getLessons();
-            },
-            deep: true,
-        },
+      fetch("http://webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com/collections/products")
+        .then((response) => response.json())
+        .then((lessons) => {
+          this.lessons = lessons;
+          return;
+        });
+      // this.getLessons();
+      return;
     },
 
+    watch: {
+      searchTerm: {
+          handler() {
+            if(this.searchTerm === "")
+              this.getLessons();
+          },
+          deep: true,
+      },
+    },
     methods:{ // methods to be used
-        getCartItem(lesson) { // getting the item stored in cart
-            for (i = 0; i < this.cart.length; i++) {
-                if(this.cart[i].lesson.id === lesson.id) {
-                    return this.cart[i]
-                }
+
+      getLessons() {
+        const url = `${this.url}/collections/products`;
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
             }
-            return null
+            return response.json();
+          })
+          .then((lessons) => {
+            this.lessons = lessons;
+          })
+          .catch((Error) => {
+            console.log("Error", Error);
+          });
+      },
+    
+
+
+    getCartItem(lesson) { // getting the item stored in cart
+        for (i = 0; i < this.cart.length; i++) {
+            if(this.cart[i].lesson.id === lesson.id) {
+                return this.cart[i]
+              }
+        }
+          return null
         },
         addToCart (lesson) { // adding an item to cart
             let cartItem = this.getCartItem(lesson);
@@ -132,4 +152,9 @@ let app = new Vue({ // The Vue instance
 
     }
         
-})
+});
+
+
+
+
+

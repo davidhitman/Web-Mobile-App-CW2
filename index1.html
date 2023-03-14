@@ -24,7 +24,7 @@
             </div>
             <div class="lesson-section">
                 <div class="lesson-list">
-                    <div v-for="lesson in searchLesson" class="lesson"> <!-- div displaying all ten lessons in the loop-->
+                    <div v-for="lesson in lessons" class="lesson"> <!-- div displaying all ten lessons in the loop-->
                         <img v-bind:src="lesson.image"> <!--v-bind binds the image-->
                         <h1 v-text="lesson.title"></h1>
                         <p class="description" v-html="lesson.description"></p>
@@ -32,8 +32,7 @@
                             Location: {{lesson.loc}}
                         </p>
                         <p class="price">
-                            Price: {{lesson.price}}
-                        </p>
+                            Price: {{lesson.price}}                        </p>
                         <p class = "spaces">
                             Space: {{lesson.spaces}}
                         </p>
