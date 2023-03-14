@@ -11,6 +11,28 @@ let app = new Vue({ // The Vue instance
             phone: ''
         },
     },
+
+    created: function () {
+        fetch("http://webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com/collections/products")
+          .then((response) => response.json())
+          .then((lessons) => {
+            this.lessons = lessons;
+            return;
+          });
+        // this.getLessons();
+        return;
+      },
+
+      watch: {
+        searchTerm: {
+            handler() {
+              if(this.searchTerm === "")
+                this.getLessons();
+            },
+            deep: true,
+        },
+    },
+
     methods:{ // methods to be used
         getCartItem(lesson) { // getting the item stored in cart
             for (i = 0; i < this.cart.length; i++) {
