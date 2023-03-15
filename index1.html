@@ -79,11 +79,6 @@
                 <strong>Phone:</strong>
                 <input v-model.number="order.phone">
             </p>
-            <!--submite section to print out what the user has entered-->
-            <div class="submit">
-                <p>Name: {{order.name}}</p>
-                <p>Phone: {{order.phone}}</p>
-            </div>
             <!--the submit button to submite the information entered-->
             <button class="submitEnable" v-if="enableSubmit" v-on:click="checkout">Submit</button>
             <button class="submitDisenable" v-else disabled>Submit</button>

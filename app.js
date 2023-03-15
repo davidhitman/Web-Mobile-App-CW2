@@ -8,8 +8,8 @@ let app = new Vue({ // The Vue instance
          cart:[],
          search:'',
          order: {
-            name: '',
-            phone: ''
+            name:'',
+            phone:''
         },
     },
 
@@ -72,9 +72,36 @@ let app = new Vue({ // The Vue instance
             lesson.spaces--;
 
         },
-        
 
+        addOrders (newOrder){
+          fetch("http://webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com/collections/order", {
+            method: "POST", //set the HTTP method as "POST"
+            headers: {
+              "Content-Type": "application/json", //set the data type as JSON
+            },
+            body: JSON.stringify(newOrder) //need to stringigy the JSON
+          }).then(
+            function(response) {
+              response.json().then(
+                function(json) {
+                console.log("Success: " + json.acknowledged);
+                
+              }
+            )}
+          );
+        },
 
+        checkout(lesson) {
+          let cartItem = this.getCartItem(lesson);
+            this.addOrders({
+              name: this.order.name,
+              phone: this.order.phone,
+              id: this.cart.id,
+              space: this.cart.spaces,
+            });
+            alert("Your Order has Been Placed");
+          },
+          
         removeItem(item) { // function removing the item from cart
             item.quantity = item.quantity - 1; // remove the item from the quantities in cart
             item.lesson.spaces = item.lesson.spaces + 1; // add the item back to the lesson spaces
@@ -100,7 +127,7 @@ let app = new Vue({ // The Vue instance
         showCheckout: function() { // check out fuction to show the checkout section when checkout button is clicked
             this.showLesson = this.showLesson? false: true;
         },
-    },
+      },
 
     computed:{ // computed functions
         
