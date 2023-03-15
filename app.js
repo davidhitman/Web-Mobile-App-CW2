@@ -70,7 +70,6 @@ let app = new Vue({ // The Vue instance
                 });
             }
             lesson.spaces--;
-
         },
 
         addOrders (newOrder){
@@ -91,17 +90,38 @@ let app = new Vue({ // The Vue instance
           );
         },
 
-        checkout(lesson) {
-          let cartItem = this.getCartItem(lesson);
-            this.addOrders({
-              name: this.order.name,
-              phone: this.order.phone,
-              id: this.cart.id,
-              space: this.cart.spaces,
+        async updateLessonSpace({ lesson_id, space }) {
+          try {
+            const url = `http://webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com/collections/products${lesson_id}`;
+    
+            fetch(url, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                space: space,
+              }),
             });
-            alert("Your Order has Been Placed");
-          },
+          } catch (error) {
+            this.error = error;
+          }
+        },
           
+        checkout() {
+          this.cart.forEach(async (item) => {
+            this.addOrders({
+              clientName: this.order.name,
+              phone: this.order.phone,
+            });
+            this.updateLessonSpace({
+              lesson_id: item.lesson._id,
+              space: item.spaces
+            });
+          });
+          alert("Your Order has Been Placed");
+          this.cart = [];
+        },
+
+
         removeItem(item) { // function removing the item from cart
             item.quantity = item.quantity - 1; // remove the item from the quantities in cart
             item.lesson.spaces = item.lesson.spaces + 1; // add the item back to the lesson spaces
