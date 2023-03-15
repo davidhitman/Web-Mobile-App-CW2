@@ -41,11 +41,6 @@ app.param("collectionName", function (req, res, next, collectionName) {
     return next();
   });
 
-app.get("/", function (req, res, next) {
-  res.send("choose collection e.g /collections/lessons");
-
-});
-
 app.get("/collections/:collectionName", function (req, res, next) {
 
   req.collection.find({}).toArray(function (err, results) {
@@ -99,6 +94,7 @@ app.get("/collections/:collectionName", function (req, res, next) {
       res.send(results);
     });
   });
+  
   app.post("/collections/:collectionName", function (req, res, next) {
     xyz = req.body;
     // req.body.id = new ObjectId();
