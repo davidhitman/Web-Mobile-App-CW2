@@ -41,13 +41,57 @@ app.param("collectionName", function (req, res, next, collectionName) {
     return next();
   });
 
-  app.get("/", function (req, res, next) {
-    res.send("choose collection e.g /collections/lessons");
+app.get("/", function (req, res, next) {
+  res.send("choose collection e.g /collections/lessons");
 
+});
+
+app.get("/collections/:collectionName", function (req, res, next) {
+
+  req.collection.find({}).toArray(function (err, results) {
+    if (err) {
+      return next(err);
+    }
+      res.send(results);
+    });
   });
 
-  app.get("/collections/:collectionName", function (req, res, next) {
+  app.put("/collections/:collectionName/:id", function (req, res, next) {
+    var id = req.params.id;
+    var space = req.body.space;
+    req.collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $inc: { space: -space } },
+      function (err, results) {
+        if (err) {
+          return next(err);
+        }
+        res.send(results);
+      }
+    );
+  });
 
+  app.get("/collections/:collectionName/search/:query", function (req, res, next) {
+      //const searchText = req.query.search;
+      let searchText = req.params.query;
+  
+      let query = {};
+      query = {
+        $or: [
+          { topic: { $regex: searchText, $options: "i" } },
+          { location: { $regex: searchText, $options: "i" } },
+        ],
+      };
+      req.collection.find(query, {}).toArray(function (err, results) {
+        if (err) {
+          return next(err);
+        }
+        res.send(results);
+      });
+    }
+  );
+
+  app.get("/collections/:collectionName/search", function (req, res, next) {
     req.collection.find({}).toArray(function (err, results) {
       if (err) {
         return next(err);
@@ -55,7 +99,16 @@ app.param("collectionName", function (req, res, next, collectionName) {
       res.send(results);
     });
   });
-  
+  app.post("/collections/:collectionName", function (req, res, next) {
+    xyz = req.body;
+    // req.body.id = new ObjectId();
+    req.collection.insertOne(xyz, function (err, results) {
+      if (err) {
+        return next(err);
+      }
+      res.send(results);
+    });
+  });
 
 
 // Logger middleware

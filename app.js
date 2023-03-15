@@ -34,7 +34,6 @@ let app = new Vue({ // The Vue instance
       },
     },
     methods:{ // methods to be used
-
       getLessons() {
         const url = `${this.url}/collections/products`;
         fetch(url)
@@ -51,16 +50,13 @@ let app = new Vue({ // The Vue instance
             console.log("Error", Error);
           });
       },
-    
-
-
-    getCartItem(lesson) { // getting the item stored in cart
+      getCartItem(lesson) { // getting the item stored in cart
         for (i = 0; i < this.cart.length; i++) {
-            if(this.cart[i].lesson.id === lesson.id) {
-                return this.cart[i]
-              }
+          if(this.cart[i].lesson.id === lesson.id) {
+              return this.cart[i]
+          }
         }
-          return null
+        return null
         },
         addToCart (lesson) { // adding an item to cart
             let cartItem = this.getCartItem(lesson);
@@ -76,6 +72,9 @@ let app = new Vue({ // The Vue instance
             lesson.spaces--;
 
         },
+        
+
+
         removeItem(item) { // function removing the item from cart
             item.quantity = item.quantity - 1; // remove the item from the quantities in cart
             item.lesson.spaces = item.lesson.spaces + 1; // add the item back to the lesson spaces
@@ -101,11 +100,6 @@ let app = new Vue({ // The Vue instance
         showCheckout: function() { // check out fuction to show the checkout section when checkout button is clicked
             this.showLesson = this.showLesson? false: true;
         },
-        submitForm(){ // the alert message displayed when the form is submited
-            alert(
-                "Order submited"
-                )
-        }
     },
 
     computed:{ // computed functions
