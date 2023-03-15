@@ -4,7 +4,7 @@ let app = new Vue({ // The Vue instance
          lessons:[],
          showLesson: true,
          show: false,
-         url: "http://webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com/",
+         url: "Webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com",
          cart:[],
          search:'',
          order: {
@@ -89,34 +89,17 @@ let app = new Vue({ // The Vue instance
             )}
           );
         },
-
-        async updateLessonSpace({ lesson_id, space }) {
-          try {
-            const url = `http://webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com/collections/products${lesson_id}`;
-    
-            fetch(url, {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                space: space,
-              }),
-            });
-          } catch (error) {
-            this.error = error;
-          }
-        },
           
         checkout() {
-          this.cart.forEach(async (item) => {
+          this.cart.forEach(async (lesson) => {
             this.addOrders({
               clientName: this.order.name,
               phone: this.order.phone,
-            });
-            this.updateLessonSpace({
-              lesson_id: item.lesson._id,
-              space: item.spaces
+              id: lesson.lesson.id,
+              orderName: lesson.lesson.title
             });
           });
+          
           alert("Your Order has Been Placed");
           this.cart = [];
         },
