@@ -104,7 +104,6 @@ let app = new Vue({ // The Vue instance
           this.cart = [];
         },
 
-
         removeItem(item) { // function removing the item from cart
             item.quantity = item.quantity - 1; // remove the item from the quantities in cart
             item.lesson.spaces = item.lesson.spaces + 1; // add the item back to the lesson spaces
@@ -161,19 +160,6 @@ let app = new Vue({ // The Vue instance
             let isletter = /^[A-Za-z]+$/.test(this.order.name);
             return isnum == true && isletter == true
         },
-        searchLesson () { // function searching for the lesson
-            tempLessons = this.lessons;
-
-            if (this.search != '' && this.search) {
-                tempLessons = tempLessons.filter((item) => {
-                    return item.title.toUpperCase().includes(this.search.toUpperCase()) 
-                    //item.Location.toUpperCase().includes(this.search.toUpperCase())
-                })
-            
-            }
-            return tempLessons
-        }
-
     }
         
 });
