@@ -50,20 +50,16 @@ app.get("/collections/:collectionName", function (req, res, next) {
       res.send(results);
     });
   });
-  
-  app.post("/collections/:collectionName", function (req, res, next) {
-    xyz = req.body;
-    // req.body.id = new ObjectId();
-    req.collection.insertOne(xyz, function (err, results) {
-      if (err) {
-        return next(err);
-      }
-      res.send(results);
-    });
+
+app.post('/collections/:collectionName', function(req, res, next) {
+  // TODO: Validate req.body
+  req.collection.insertOne(req.body, function(err, results) {
+    if (err) {
+      return next(err);
+    }
+    res.send(results);
   });
-
-
-
+});
 
 // Logger middleware
 app.use(function (req, res, next) {

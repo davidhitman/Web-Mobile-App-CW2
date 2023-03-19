@@ -4,7 +4,7 @@ let app = new Vue({ // The Vue instance
          lessons:[],
          showLesson: true,
          show: false,
-         url: "Webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com",
+         urls: "Webstore-env.eba-fu3rpgag.eu-west-2.elasticbeanstalk.com",
          cart:[],
          search:'',
          order: {
@@ -24,18 +24,9 @@ let app = new Vue({ // The Vue instance
       return;
     },
 
-    watch: {
-      searchTerm: {
-          handler() {
-            if(this.searchTerm === "")
-              this.getLessons();
-          },
-          deep: true,
-      },
-    },
     methods:{ // methods to be used
       getLessons() {
-        const url = `${this.url}/collections/products`;
+        const url = `${this.urls}/collections/products`;
         fetch(url)
           .then((response) => {
             if (!response.ok) {
