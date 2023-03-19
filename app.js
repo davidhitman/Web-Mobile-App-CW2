@@ -41,6 +41,9 @@ let app = new Vue({ // The Vue instance
             console.log("Error", Error);
           });
       },
+
+
+
       getCartItem(lesson) { // getting the item stored in cart
         for (i = 0; i < this.cart.length; i++) {
           if(this.cart[i].lesson.id === lesson.id) {
@@ -79,6 +82,22 @@ let app = new Vue({ // The Vue instance
               }
             )}
           );
+        },
+
+        async updateLesson({ lesson, space }) {
+          try {
+            const url = `${this.url}/lessons/${lesson.id}`;
+  
+            fetch(url, {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                space: space,
+              }),
+            });
+          } catch (error) {
+            this.error = error;
+          }
         },
           
         checkout() {
