@@ -22,6 +22,16 @@ body {
     justify-content: space-between;
     padding: 20px 80px;
 }
+.btn-search{
+    border: none;
+    border-radius: 20px;
+    color:white;
+    background-color: black;
+    left:105px;
+    top: 18px;
+    height: 33px;
+    position: absolute;
+}
 
 #addButt {
     border: none;
