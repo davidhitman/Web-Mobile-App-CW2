@@ -51,14 +51,28 @@ app.get("/collections/:collectionName", function (req, res, next) {
     });
   });
 
-app.post('/collections/:collectionName', function(req, res, next) {
-  // TODO: Validate req.body
-  req.collection.insertOne(req.body, function(err, results) {
-    if (err) {
-      return next(err);
-    }
-    res.send(results);
+  app.post('/collections/:collectionName', function(req, res, next) {
+    // TODO: Validate req.body
+    req.collection.insertOne(req.body, function(err, results) {
+      if (err) {
+        return next(err);
+      }
+      res.send(results);
+    });
   });
+  app.put('/collections/:collectionName/:id', function(req, res, next) {
+  // TODO: Validate req.body
+  req.collection.updateOne({_id: new ObjectId(req.params.id)},
+    {$set: req.body},
+    {safe: true, multi: false}, function(err, result) {
+      if (err) {
+        return next(err);
+      } else {
+        res.send((result.matchedCount === 1) ? {msg: "success"} : {msg: "error"});
+      }
+    }
+  );
+  
 });
 
 // Logger middleware

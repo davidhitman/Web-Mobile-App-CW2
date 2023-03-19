@@ -15,7 +15,7 @@
         <div v-if="showLesson" > <!-- check if the lessons page should display or the basket page should display-->
             <div class="head"> <!--div with search input and basket, ascend and descend button-->
                 <p >
-                    <input class="search" type="text" v-model="searchTerm" placeholder="Search Lesson">
+                    <input class="search" type="text"  placeholder="Search Lesson">
                     <button class="btn-search" type="submit" value="Submit" v-on:click="search">Search</button>
                 </p>
                 <button class="basketBtnEnable" v-if="enableCheckout" v-on:click="showCheckout" ><span class="fa fa-shopping-basket">{{totalItems}}</span>Basket</button>
